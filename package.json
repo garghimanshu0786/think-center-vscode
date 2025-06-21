@@ -3,14 +3,14 @@
   "displayName": "Think Center",
   "description": "Multi-perspective cognitive framework for software development. Provides Weaver, Maker, Checker, Observer/Guardian, and Explorer/Exploiter perspectives for comprehensive thinking and problem-solving.",
   "version": "0.1.0",
-  "publisher": "himanshu-garg",
+  "publisher": "garghimanshu0786",
   "repository": {
     "type": "git",
-    "url": "https://github.com/himanshu-garg/think-center-vscode"
+    "url": "https://github.com/garghimanshu0786/think-center-vscode"
   },
-  "homepage": "https://github.com/himanshu-garg/think-center-vscode",
+  "homepage": "https://github.com/garghimanshu0786/think-center-vscode",
   "bugs": {
-    "url": "https://github.com/himanshu-garg/think-center-vscode/issues"
+    "url": "https://github.com/garghimanshu0786/think-center-vscode/issues"
   },
   "license": "MIT",
   "icon": "https://raw.githubusercontent.com/himanshu-garg/think-center-vscode/main/icon.png",
