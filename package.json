@@ -13,7 +13,7 @@
     "url": "https://github.com/garghimanshu0786/think-center-vscode/issues"
   },
   "license": "MIT",
-  "icon": "https://raw.githubusercontent.com/himanshu-garg/think-center-vscode/main/icon.png",
+  "icon": "media/icon.png",
   "engines": {
     "vscode": "^1.74.0"
   },

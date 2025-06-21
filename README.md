@@ -1,6 +1,11 @@
 # Think Center VS Code Extension
 
-A multi-perspective cognitive framework for software development that integrates directly into VS Code. Think Center provides five distinct thinking perspectives to help developers approach problems more comprehensively and make better decisions.
+> **Forked from [Think Center](https://github.com/himanshu-garg/think-center)** - A multi-perspective cognitive framework for software development that integrates directly into VS Code.
+
+[![VS Code Marketplace](https://img.shields.io/badge/VS%20Code-Marketplace-blue?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=garghimanshu0786.think-center)
+[![GitHub](https://img.shields.io/github/stars/garghimanshu0786/think-center-vscode?style=social)](https://github.com/garghimanshu0786/think-center-vscode)
+
+Think Center provides five distinct thinking perspectives to help developers approach problems more comprehensively and make better decisions.
 
 ## 🎯 What is Think Center?
 
@@ -172,7 +177,12 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-Think Center framework concepts inspired by cognitive science research on perspective-taking and multi-dimensional thinking in software development.
+This VS Code extension is based on the [Think Center cognitive framework](https://github.com/himanshu-garg/think-center) by Himanshu Garg. The original Think Center framework concepts are inspired by cognitive science research on perspective-taking and multi-dimensional thinking in software development.
+
+## 🔗 Related Projects
+
+- **[Think Center Framework](https://github.com/himanshu-garg/think-center)** - Original multi-perspective cognitive framework
+- **[Think Center Documentation](https://github.com/himanshu-garg/think-center/blob/main/README.md)** - Learn more about the thinking methodology
 
 ---
 
