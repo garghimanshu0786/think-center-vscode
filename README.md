@@ -1,192 +1,124 @@
-# Think Center VS Code Extension
+# Think Center for VS Code
 
-> **Forked from [Think Center](https://github.com/himanshu-garg/think-center)** - A multi-perspective cognitive framework for software development that integrates directly into VS Code.
+*Bringing multi-perspective thinking to your coding workflow*
 
-[![VS Code Marketplace](https://img.shields.io/badge/VS%20Code-Marketplace-blue?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=garghimanshu0786.think-center)
-[![GitHub](https://img.shields.io/github/stars/garghimanshu0786/think-center-vscode?style=social)](https://github.com/garghimanshu0786/think-center-vscode)
+[![Version](https://img.shields.io/vscode-marketplace/v/garghimanshu0786.think-center)](https://marketplace.visualstudio.com/items?itemName=garghimanshu0786.think-center)
+[![Downloads](https://img.shields.io/vscode-marketplace/d/garghimanshu0786.think-center)](https://marketplace.visualstudio.com/items?itemName=garghimanshu0786.think-center)
 
-Think Center provides five distinct thinking perspectives to help developers approach problems more comprehensively and make better decisions.
+> This extension brings the Think Center framework into VS Code, making it easy to approach coding challenges from multiple perspectives. Built on the foundation of [achamian/think-center](https://github.com/achamian/think-center).
 
-## 🎯 What is Think Center?
+## What is Think Center?
 
-Think Center is a cognitive framework that encourages looking at problems through multiple lenses:
+Think Center is a cognitive framework that helps developers think through problems using five distinct perspectives. Instead of getting stuck in one way of thinking, you can deliberately shift between different mental modes to find better solutions.
 
-- **🏗️ Weaver**: Architecture and design perspective
-- **🔨 Maker**: Implementation and development perspective  
-- **✅ Checker**: Quality assurance and testing perspective
-- **👥 Observer/Guardian**: User experience and requirements perspective
-- **🚀 Explorer/Exploiter**: Innovation and optimization perspective
+## The Five Perspectives
 
-## 🌟 Features
+**�️ Weaver** - *The Architect*  
+Thinks about structure, patterns, and how everything fits together. Great for system design and long-term maintainability.
 
-### Dual Integration Approach
+**🔨 Maker** - *The Builder*  
+Focuses on getting things done. Practical implementation, working code, and pragmatic solutions.
 
-This extension offers two ways to use Think Center:
+**✅ Checker** - *The Quality Guardian*  
+Hunts for bugs, edge cases, and potential problems. Your first line of defense against issues.
 
-1. **Native VS Code Extension**: Full UI with panels, tree views, and context analysis
-2. **Copilot Chat Integration**: Direct prompts you can use in GitHub Copilot Chat
+**👁️ Observer/Guardian** - *The User Advocate*  
+Considers the human side: developer experience, usability, and team impact.
+
+**⚡ Explorer/Exploiter** - *The Optimizer*  
+Looks for performance improvements, alternative approaches, and technical trade-offs.
+
+## How to Use
+
+### Quick Start with Copilot Chat
+
+1. **Initialize**: Press `Cmd+Shift+I` to set up Think Center in Copilot Chat
+2. **Ask away**: "Weaver, how should I structure this API?" or "Checker, what could break here?"
+3. **Get diverse insights**: Each perspective brings unique expertise to your problem
 
 ### Extension Features
 
-- **Smart Context Analysis**: Automatically analyzes your current code context
-- **Perspective-Based Prompts**: Tailored prompts for each thinking perspective
-- **Interactive UI Panel**: Rich webview interface for exploring perspectives
-- **Tree View**: Quick access to perspectives and prompts
-- **Keyboard Shortcuts**: Fast access to Think Center functionality
-- **Context Menus**: Right-click integration in the editor
+- **Panel Interface**: `Cmd+Shift+T` opens the Think Center panel
+- **Context Menus**: Right-click on code to analyze with specific perspectives  
+- **Keyboard Shortcuts**: Direct access to each perspective
+- **Smart Context**: The extension understands your current code and project
 
-### Copilot Chat Integration
+### Example Conversations
 
-- **Ready-to-use Prompts**: Copy and paste prompts directly into Copilot Chat
-- **Context-Aware Templates**: Prompts that adapt to your current code selection
-- **No Setup Required**: Works immediately with GitHub Copilot
+```
+You: "Checker, review this authentication function"
+Copilot: *analyzes for security issues, edge cases, error handling*
 
-## 🚀 Quick Start
+You: "Weaver and Maker, debate whether to use microservices here"
+Copilot: *presents architectural trade-offs from both perspectives*
 
-### Option 1: Native Extension
+You: "Council meeting: how do we improve this component's performance?"
+Copilot: *multi-perspective analysis covering all angles*
+```
 
-1. Install the extension
-2. Open any code file
-3. Use `Ctrl+Shift+T` (or `Cmd+Shift+T` on Mac) to open Think Center panel
-4. Select a perspective and choose a prompt
-5. The extension analyzes your context and generates a tailored prompt
+## Installation
 
-### Option 2: Copilot Chat
+**From VS Code Marketplace:**
+1. Open VS Code
+2. Go to Extensions (Cmd+Shift+X)
+3. Search for "Think Center"
+4. Click Install
 
-1. Install the extension  
-2. Select some code in your editor
-3. Use `Ctrl+Shift+P` > "Think Center: Copy Prompt for Copilot Chat"
-4. Paste the prompt in GitHub Copilot Chat
-5. Start your multi-perspective conversation
+**From Command Line:**
+```bash
+code --install-extension garghimanshu0786.think-center
+```
 
-## 📋 Commands
+## Commands & Shortcuts
 
-- `thinkCenter.openPanel` - Open Think Center panel
-- `thinkCenter.analyzeContext` - Analyze current context
-- `thinkCenter.showPerspectives` - Show perspectives tree view
-- `thinkCenter.weaverPrompt` - Quick Weaver perspective prompt
-- `thinkCenter.makerPrompt` - Quick Maker perspective prompt
-- `thinkCenter.checkerPrompt` - Quick Checker perspective prompt
-- `thinkCenter.observerPrompt` - Quick Observer/Guardian perspective prompt
-- `thinkCenter.explorerPrompt` - Quick Explorer/Exploiter perspective prompt
-- `thinkCenter.copilotChatPrompt` - Generate prompt for Copilot Chat
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| Open Panel | `Cmd+Shift+T` | Opens the Think Center interface |
+| Initialize Chat | `Cmd+Shift+I` | Sets up Think Center in Copilot Chat |
+| Ask Weaver | `Cmd+Shift+W` | Architecture and design perspective |
+| Ask Maker | `Cmd+Shift+M` | Implementation perspective |
+| Ask Checker | `Cmd+Shift+C` | Quality assurance perspective |
+| Council Meeting | `Cmd+Shift+U` | All perspectives together |
 
-## ⌨️ Keyboard Shortcuts
+## Works With
 
-- `Ctrl+Shift+T` (`Cmd+Shift+T`): Open Think Center panel
-- `Ctrl+Shift+W` (`Cmd+Shift+W`): Weaver perspective
-- `Ctrl+Shift+M` (`Cmd+Shift+M`): Maker perspective  
-- `Ctrl+Shift+C` (`Cmd+Shift+C`): Checker perspective
-- `Ctrl+Shift+O` (`Cmd+Shift+O`): Observer/Guardian perspective
-- `Ctrl+Shift+E` (`Cmd+Shift+E`): Explorer/Exploiter perspective
+- **GitHub Copilot Chat** - Primary integration
+- **Any AI Chat** - Copy prompts to use anywhere
+- **All Languages** - Context-aware for your project type
+- **Team Workflows** - Share perspective-based code reviews
 
-## 🎨 The Five Perspectives
+## Why This Matters
 
-### 🏗️ Weaver - Architecture & Design
-Focus on structure, patterns, and long-term maintainability.
-- Analyze overall architecture
-- Review design patterns
-- Evaluate structural integrity
-- Plan for scalability
+Good code isn't just about syntax—it's about making thoughtful decisions. Think Center helps you:
 
-### 🔨 Maker - Implementation & Development
-Focus on practical implementation and coding.
-- Create implementation plans
-- Review code quality
-- Suggest refactoring
-- Optimize development workflow
+- **Avoid tunnel vision** by deliberately shifting perspectives
+- **Catch issues early** by thinking like a tester while coding
+- **Build maintainable systems** by considering long-term architecture
+- **Write human-friendly code** by thinking about your teammates
 
-### ✅ Checker - Quality & Testing
-Focus on reliability, security, and correctness.
-- Identify potential bugs
-- Design test strategies
-- Assess security risks
-- Validate requirements
-
-### 👥 Observer/Guardian - User Experience & Requirements
-Focus on user needs and stakeholder value.
-- Evaluate user experience
-- Analyze requirements
-- Consider accessibility
-- Assess business impact
-
-### 🚀 Explorer/Exploiter - Innovation & Optimization
-Focus on performance, alternatives, and future possibilities.
-- Identify optimization opportunities
-- Explore alternative approaches
-- Consider emerging technologies
-- Plan for future needs
-
-## 🛠️ Configuration
-
-The extension can be configured through VS Code settings:
+## Configuration
 
 ```json
 {
-  "thinkCenter.enableContextAnalysis": true,
-  "thinkCenter.showPerspectiveIcons": true,
-  "thinkCenter.autoRefreshContext": true,
-  "thinkCenter.defaultPerspective": "weaver"
+  "thinkCenter.enabled": true,
+  "thinkCenter.defaultIntegration": "both",
+  "thinkCenter.includeContext": true
 }
 ```
 
-## 🔧 Usage Examples
+## Contributing
 
-### Architecture Review (Weaver)
-```
-Select a class or module, use Weaver perspective:
-"Analyze the architecture and design patterns in this code, focusing on maintainability and scalability..."
-```
+Found a bug or have an idea? [Open an issue](https://github.com/garghimanshu0786/think-center-vscode/issues) or contribute directly.
 
-### Code Quality Check (Checker)
-```
-Select problematic code, use Checker perspective:
-"Review this code for potential bugs, security issues, and reliability concerns..."
-```
+## Credits
 
-### Performance Optimization (Explorer/Exploiter)
-```
-Select performance-critical code, use Explorer/Exploiter perspective:
-"Identify optimization opportunities and alternative approaches for better performance..."
-```
+This extension is built on the Think Center framework created by [@achamian](https://github.com/achamian). The original framework and methodology can be found at [achamian/think-center](https://github.com/achamian/think-center).
 
-## 🤝 Integration with Copilot Chat
-
-The extension works seamlessly with GitHub Copilot Chat:
-
-1. **Context-Aware Prompts**: Automatically includes your selected code and context
-2. **Perspective Templates**: Each perspective has specialized prompt templates
-3. **One-Click Copy**: Generated prompts can be copied with one click
-4. **No Dependencies**: Works with any Copilot Chat setup
-
-## 📚 Learn More
-
-Think Center is based on cognitive science principles for better decision-making and problem-solving in software development. Each perspective encourages different types of thinking:
-
-- **Convergent thinking** (Checker, Maker)
-- **Divergent thinking** (Explorer/Exploiter, Weaver)  
-- **Critical thinking** (Observer/Guardian)
-
-## 🐛 Issues & Feedback
-
-Found a bug or have a suggestion? Please [open an issue](https://github.com/yourusername/think-center-vscode/issues).
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-This VS Code extension is based on the [Think Center cognitive framework](https://github.com/himanshu-garg/think-center) by Himanshu Garg. The original Think Center framework concepts are inspired by cognitive science research on perspective-taking and multi-dimensional thinking in software development.
-
-## 🔗 Related Projects
-
-- **[Think Center Framework](https://github.com/himanshu-garg/think-center)** - Original multi-perspective cognitive framework
-- **[Think Center Documentation](https://github.com/himanshu-garg/think-center/blob/main/README.md)** - Learn more about the thinking methodology
+Special thanks to the Think Center community for developing this powerful thinking methodology.
 
 ---
 
-**Happy coding with multiple perspectives! 🧠✨**
+*Happy coding with multiple perspectives! 🧠*
 
 ---
 

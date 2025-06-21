@@ -361,6 +361,7 @@ Let's debug this step-by-step with multiple perspectives:`;
         </head>
         <body>
             <h1>🧠 Think Center + Copilot Chat Integration</h1>
+            <p><em>Based on the Think Center framework by <a href="https://github.com/achamian/think-center">@achamian</a></em></p>
             
             <div class="step">
                 <h3>Step 1: Initialize (One Time)</h3>
