@@ -1,0 +1,250 @@
+{
+  "name": "think-center",
+  "displayName": "Think Center",
+  "description": "Multi-perspective cognitive framework for software development. Provides Weaver, Maker, Checker, Observer/Guardian, and Explorer/Exploiter perspectives for comprehensive thinking and problem-solving.",
+  "version": "0.1.0",
+  "publisher": "himanshu-garg",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/himanshu-garg/think-center-vscode"
+  },
+  "homepage": "https://github.com/himanshu-garg/think-center-vscode",
+  "bugs": {
+    "url": "https://github.com/himanshu-garg/think-center-vscode/issues"
+  },
+  "license": "MIT",
+  "icon": "https://raw.githubusercontent.com/himanshu-garg/think-center-vscode/main/icon.png",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Machine Learning",
+    "Education"
+  ],
+  "keywords": [
+    "thinking",
+    "perspectives",
+    "copilot",
+    "cognitive",
+    "architecture",
+    "debugging",
+    "AI"
+  ],
+  "activationEvents": [
+    "onCommand:thinkCenter.openPanel",
+    "onCommand:thinkCenter.askWeaver",
+    "onCommand:thinkCenter.initializeCopilotChat"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "thinkCenter.openPanel",
+        "title": "Open Think Center Panel",
+        "category": "Think Center",
+        "icon": "$(symbol-misc)"
+      },
+      {
+        "command": "thinkCenter.initializeCopilotChat",
+        "title": "Initialize Think Center in Copilot Chat",
+        "category": "Think Center",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "thinkCenter.askWeaver",
+        "title": "Ask Weaver (Architecture & Patterns)",
+        "category": "Think Center",
+        "icon": "$(symbol-interface)"
+      },
+      {
+        "command": "thinkCenter.askMaker",
+        "title": "Ask Maker (Implementation & Execution)",
+        "category": "Think Center",
+        "icon": "$(tools)"
+      },
+      {
+        "command": "thinkCenter.askChecker",
+        "title": "Ask Checker (Quality & Validation)",
+        "category": "Think Center",
+        "icon": "$(check)"
+      },
+      {
+        "command": "thinkCenter.askOG",
+        "title": "Ask O/G (Developer Experience)",
+        "category": "Think Center",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "thinkCenter.askEE",
+        "title": "Ask E/E (Technical Tradeoffs)",
+        "category": "Think Center",
+        "icon": "$(graph)"
+      },
+      {
+        "command": "thinkCenter.councilMeeting",
+        "title": "Council Meeting (All Perspectives)",
+        "category": "Think Center",
+        "icon": "$(organization)"
+      },
+      {
+        "command": "thinkCenter.analyzeSelection",
+        "title": "Analyze Selected Code",
+        "category": "Think Center",
+        "icon": "$(search)"
+      },
+      {
+        "command": "thinkCenter.debugWithPerspectives",
+        "title": "Debug with Multiple Perspectives",
+        "category": "Think Center",
+        "icon": "$(bug)"
+      },
+      {
+        "command": "thinkCenter.analyzeFile",
+        "title": "Analyze File with Think Center",
+        "category": "Think Center",
+        "icon": "$(file-code)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "thinkCenter.openPanel",
+        "key": "ctrl+shift+t",
+        "mac": "cmd+shift+t"
+      },
+      {
+        "command": "thinkCenter.initializeCopilotChat",
+        "key": "ctrl+shift+i",
+        "mac": "cmd+shift+i"
+      },
+      {
+        "command": "thinkCenter.askWeaver",
+        "key": "ctrl+shift+w",
+        "mac": "cmd+shift+w"
+      },
+      {
+        "command": "thinkCenter.askMaker",
+        "key": "ctrl+shift+m",
+        "mac": "cmd+shift+m"
+      },
+      {
+        "command": "thinkCenter.askChecker",
+        "key": "ctrl+shift+c",
+        "mac": "cmd+shift+c"
+      },
+      {
+        "command": "thinkCenter.councilMeeting",
+        "key": "ctrl+shift+u",
+        "mac": "cmd+shift+u"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "submenu": "thinkCenter.contextMenu",
+          "group": "thinkCenter",
+          "when": "editorHasSelection"
+        }
+      ],
+      "thinkCenter.contextMenu": [
+        {
+          "command": "thinkCenter.analyzeSelection",
+          "group": "analysis"
+        },
+        {
+          "command": "thinkCenter.askWeaver",
+          "group": "perspectives"
+        },
+        {
+          "command": "thinkCenter.askMaker",
+          "group": "perspectives"
+        },
+        {
+          "command": "thinkCenter.askChecker",
+          "group": "perspectives"
+        },
+        {
+          "command": "thinkCenter.councilMeeting",
+          "group": "council"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "thinkCenter.analyzeFile",
+          "group": "thinkCenter",
+          "when": "resourceExtname =~ /\\.(js|ts|jsx|tsx|py|java|cpp|c|cs|go|rs|php)$/"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "thinkCenter.contextMenu",
+        "label": "Think Center"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "thinkCenter.perspectives",
+          "name": "Think Center",
+          "when": "thinkCenter.enabled"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "thinkCenter",
+          "title": "Think Center",
+          "icon": "$(symbol-misc)"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Think Center",
+      "properties": {
+        "thinkCenter.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Think Center perspectives"
+        },
+        "thinkCenter.defaultIntegration": {
+          "type": "string",
+          "enum": ["extension", "copilotChat", "both"],
+          "default": "both",
+          "description": "Default integration method: extension UI, Copilot Chat, or both"
+        },
+        "thinkCenter.includeContext": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include file and project context in perspective analysis"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3",
+    "ts-loader": "^9.5.2",
+    "webpack": "^5.99.7",
+    "webpack-cli": "^6.0.1",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
