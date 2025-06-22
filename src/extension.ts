@@ -119,6 +119,13 @@ function registerCommands(
             debugWithPerspectives(copilotChatIntegration, contextAnalyzer);
         })
     );
+
+    // Configuration commands
+    context.subscriptions.push(
+        vscode.commands.registerCommand('thinkCenter.createConfigFiles', () => {
+            copilotChatIntegration.createConfigFiles();
+        })
+    );
 }
 
 async function askPerspective(

@@ -2,7 +2,7 @@
   "name": "think-center",
   "displayName": "Think Center",
   "description": "Multi-perspective cognitive framework for software development. Provides Weaver, Maker, Checker, Observer/Guardian, and Explorer/Exploiter perspectives for comprehensive thinking and problem-solving.",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "publisher": "himanshu-garg",
   "icon": "media/icon.png",
   "repository": {
@@ -34,7 +34,8 @@
   "activationEvents": [
     "onCommand:thinkCenter.openPanel",
     "onCommand:thinkCenter.askWeaver",
-    "onCommand:thinkCenter.initializeCopilotChat"
+    "onCommand:thinkCenter.initializeCopilotChat",
+    "onCommand:thinkCenter.createConfigFiles"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -104,6 +105,12 @@
         "title": "Analyze File with Think Center",
         "category": "Think Center",
         "icon": "$(file-code)"
+      },
+      {
+        "command": "thinkCenter.createConfigFiles",
+        "title": "Create Think Center Configuration Files",
+        "category": "Think Center",
+        "icon": "$(settings-gear)"
       }
     ],
     "keybindings": [

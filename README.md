@@ -96,6 +96,40 @@ Good code isn't just about syntax—it's about making thoughtful decisions. Thin
 - **Build maintainable systems** by considering long-term architecture
 - **Write human-friendly code** by thinking about your teammates
 
+## Workspace Customization
+
+Think Center can be customized for your specific project needs:
+
+### Create Configuration Files
+
+Run `Think Center: Create Configuration Files` from the Command Palette to generate:
+
+- `.vscode/instructions.md` - Project-specific guidelines for each perspective
+- `.vscode/think-center-prompts.md` - Custom prompts tailored to your domain
+
+### Automatic Detection
+
+Think Center automatically looks for and uses:
+
+- `.vscode/instructions.md` or `instructions.md` - Workspace-specific instructions
+- `.vscode/think-center-prompts.md` or `prompts.md` - Custom perspective prompts
+- `.github/copilot-instructions.md` - GitHub Copilot instructions
+- `README.md` - Project context and description
+
+### Benefits of Customization
+
+- **Domain Knowledge**: Add project-specific context (e.g., financial regulations, game mechanics)
+- **Team Alignment**: Share consistent thinking patterns across your team
+- **Coding Standards**: Embed your preferred patterns and anti-patterns
+- **Context Awareness**: Make perspectives understand your tech stack and constraints
+
+### Example Use Cases
+
+- **React Projects**: Focus on component patterns, accessibility, and performance
+- **API Development**: Emphasize security, scalability, and documentation
+- **Data Science**: Consider data quality, model validation, and reproducibility
+- **Game Development**: Balance performance, user experience, and maintainability
+
 ## Configuration
 
 ```json

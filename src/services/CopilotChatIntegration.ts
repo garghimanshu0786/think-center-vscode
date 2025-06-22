@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { AnalysisResult } from './ContextAnalyzer';
+import { WorkspaceConfigManager, WorkspaceConfig } from './WorkspaceConfigManager';
 
 export interface ProjectContext {
     projectType: string;
@@ -13,7 +14,7 @@ export interface ProjectContext {
 }
 
 export class CopilotChatIntegration {
-    private static readonly THINK_CENTER_SYSTEM_PROMPT = `You are GitHub Copilot enhanced with Think Center perspectives:
+    private static readonly DEFAULT_SYSTEM_PROMPT = `You are GitHub Copilot enhanced with Think Center perspectives:
 
 🧵 **Weaver** - Architecture & Patterns (system design, abstractions, long-term thinking)
 🔨 **Maker** - Implementation & Execution (concrete code, pragmatic solutions, getting things done)  
@@ -32,15 +33,82 @@ export class CopilotChatIntegration {
 Ready for multi-perspective development thinking!`;
 
     private outputChannel: vscode.OutputChannel;
+    private configManager: WorkspaceConfigManager | null = null;
 
     constructor() {
         this.outputChannel = vscode.window.createOutputChannel('Think Center');
+        this.initializeConfigManager();
+    }
+
+    private initializeConfigManager(): void {
+        const workspaceFolders = vscode.workspace.workspaceFolders;
+        if (workspaceFolders && workspaceFolders.length > 0) {
+            this.configManager = new WorkspaceConfigManager(workspaceFolders[0].uri.fsPath);
+        }
+    }
+
+    async createConfigFiles(): Promise<void> {
+        if (!this.configManager) {
+            vscode.window.showErrorMessage('No workspace folder found. Please open a folder first.');
+            return;
+        }
+
+        try {
+            await this.configManager.createTemplateFiles();
+            vscode.window.showInformationMessage(
+                '📝 Think Center configuration files created! Check .vscode/ folder.',
+                'Open Instructions',
+                'Open Prompts'
+            ).then(selection => {
+                if (selection === 'Open Instructions') {
+                    vscode.workspace.openTextDocument(vscode.Uri.file(
+                        vscode.workspace.workspaceFolders![0].uri.fsPath + '/.vscode/instructions.md'
+                    )).then(doc => vscode.window.showTextDocument(doc));
+                } else if (selection === 'Open Prompts') {
+                    vscode.workspace.openTextDocument(vscode.Uri.file(
+                        vscode.workspace.workspaceFolders![0].uri.fsPath + '/.vscode/think-center-prompts.md'
+                    )).then(doc => vscode.window.showTextDocument(doc));
+                }
+            });
+        } catch (error) {
+            vscode.window.showErrorMessage(`Failed to create config files: ${error}`);
+        }
+    }
+
+    private async getSystemPrompt(): Promise<string> {
+        if (!this.configManager) {
+            return CopilotChatIntegration.DEFAULT_SYSTEM_PROMPT;
+        }
+
+        try {
+            const config = await this.configManager.getWorkspaceConfig();
+            
+            let prompt = config.customPrompts?.systemPrompt || CopilotChatIntegration.DEFAULT_SYSTEM_PROMPT;
+            
+            // Add workspace instructions if available
+            if (config.instructions) {
+                prompt += `\n\n**Workspace Instructions**:\n${config.instructions}`;
+            }
+            
+            // Add project context if available
+            if (config.projectContext) {
+                prompt += `\n\n**Project Context**:\n${config.projectContext}`;
+            }
+            
+            return prompt;
+        } catch (error) {
+            console.error('Failed to load workspace config:', error);
+            return CopilotChatIntegration.DEFAULT_SYSTEM_PROMPT;
+        }
     }
 
     async initializeThinkCenter(): Promise<void> {
         try {
+            // Get the system prompt (with workspace customizations)
+            const systemPrompt = await this.getSystemPrompt();
+            
             // Copy the system prompt to clipboard for easy pasting
-            await vscode.env.clipboard.writeText(CopilotChatIntegration.THINK_CENTER_SYSTEM_PROMPT);
+            await vscode.env.clipboard.writeText(systemPrompt);
             
             // Try to open Copilot Chat
             try {
@@ -75,20 +143,21 @@ Ready for multi-perspective development thinking!`;
                     );
                 }
             } else if (action === 'Show Instructions') {
-                this.showInstructions();
+                await this.showInstructions();
             } else if (action === 'Copy Again') {
-                await vscode.env.clipboard.writeText(CopilotChatIntegration.THINK_CENTER_SYSTEM_PROMPT);
+                const systemPrompt = await this.getSystemPrompt();
+                await vscode.env.clipboard.writeText(systemPrompt);
                 vscode.window.showInformationMessage('Think Center prompt copied to clipboard again!');
             }
         } catch (error) {
             console.error('Failed to initialize Think Center in Copilot Chat:', error);
-            this.fallbackInitialization();
+            await this.fallbackInitialization();
         }
     }
 
     async askPerspectiveInChat(perspective: string, question: string, analysis: AnalysisResult): Promise<void> {
         const context = this.analysisToProjectContext(analysis);
-        const prompt = this.buildChatPrompt(perspective, question, context);
+        const prompt = await this.buildChatPrompt(perspective, question, context);
         
         try {
             // Try to open Copilot Chat
@@ -131,7 +200,7 @@ Ready for multi-perspective development thinking!`;
 
     async councilMeeting(topic: string, analysis: AnalysisResult): Promise<void> {
         const context = this.analysisToProjectContext(analysis);
-        const prompt = this.buildCouncilPrompt(topic, context);
+        const prompt = await this.buildCouncilPrompt(topic, context);
         
         try {
             await vscode.commands.executeCommand('workbench.panel.chat.view.copilot.focus');
@@ -216,20 +285,57 @@ Ready for multi-perspective development thinking!`;
         });
     }
 
-    private buildChatPrompt(perspective: string, question: string, context: ProjectContext): string {
+    private async buildChatPrompt(perspective: string, question: string, context: ProjectContext): Promise<string> {
         const emoji = this.getPerspectiveEmoji(perspective);
         const perspectiveName = this.getPerspectiveName(perspective);
+        
+        // Get workspace-specific prompt for this perspective
+        let perspectivePrompt = `Please analyze this from the ${perspectiveName} perspective, focusing on ${this.getPerspectiveFocus(perspective)}.`;
+        
+        if (this.configManager) {
+            try {
+                const config = await this.configManager.getWorkspaceConfig();
+                const customPrompts = config.customPrompts;
+                
+                if (customPrompts) {
+                    switch (perspective.toLowerCase()) {
+                        case 'weaver':
+                            if (customPrompts.weaverPrompt) perspectivePrompt = customPrompts.weaverPrompt;
+                            break;
+                        case 'maker':
+                            if (customPrompts.makerPrompt) perspectivePrompt = customPrompts.makerPrompt;
+                            break;
+                        case 'checker':
+                            if (customPrompts.checkerPrompt) perspectivePrompt = customPrompts.checkerPrompt;
+                            break;
+                        case 'og':
+                            if (customPrompts.ogPrompt) perspectivePrompt = customPrompts.ogPrompt;
+                            break;
+                        case 'ee':
+                            if (customPrompts.eePrompt) perspectivePrompt = customPrompts.eePrompt;
+                            break;
+                    }
+                }
+                
+                // Add workspace instructions if available
+                if (config.instructions) {
+                    perspectivePrompt += `\n\n**Workspace Guidelines**: ${config.instructions}`;
+                }
+            } catch (error) {
+                console.error('Failed to load workspace config for chat prompt:', error);
+            }
+        }
         
         return `**${emoji} ${perspectiveName}** analysis requested:
 
 **Context**: ${this.formatContext(context)}
 **Question**: ${question}
 
-Please analyze this from the ${perspectiveName} perspective, focusing on ${this.getPerspectiveFocus(perspective)}.`;
+${perspectivePrompt}`;
     }
 
-    private buildCouncilPrompt(topic: string, context: ProjectContext): string {
-        return `**🏛️ Think Center Council Meeting**
+    private async buildCouncilPrompt(topic: string, context: ProjectContext): Promise<string> {
+        let basePrompt = `**🏛️ Think Center Council Meeting**
 
 **Context**: ${this.formatContext(context)}
 **Topic**: ${topic}
@@ -241,7 +347,27 @@ Please analyze this from the ${perspectiveName} perspective, focusing on ${this.
 🔍 **O/G**: Developer experience and maintainability
 ⚖️ **E/E**: Performance and optimization opportunities
 
-Each perspective will analyze this topic and contribute their unique insights. Let the Council begin:`;
+Each perspective will analyze this topic and contribute their unique insights.`;
+
+        // Add workspace-specific council guidelines
+        if (this.configManager) {
+            try {
+                const config = await this.configManager.getWorkspaceConfig();
+                
+                if (config.customPrompts?.councilPrompt) {
+                    basePrompt += `\n\n**Workspace Council Guidelines**: ${config.customPrompts.councilPrompt}`;
+                }
+                
+                if (config.instructions) {
+                    basePrompt += `\n\n**Workspace Instructions**: ${config.instructions}`;
+                }
+            } catch (error) {
+                console.error('Failed to load workspace config for council prompt:', error);
+            }
+        }
+        
+        basePrompt += '\n\nLet the Council begin:';
+        return basePrompt;
     }
 
     private buildAnalysisPrompt(code: string, context: ProjectContext): string {
@@ -355,7 +481,8 @@ Let's debug this step-by-step with multiple perspectives:`;
         return parts.filter(Boolean).join(' | ') || 'Development context';
     }
 
-    private showInstructions(): void {
+    private async showInstructions(): Promise<void> {
+        const systemPrompt = await this.getSystemPrompt();
         const panel = vscode.window.createWebviewPanel(
             'thinkCenterInstructions',
             'Think Center + Copilot Chat',
@@ -397,7 +524,7 @@ Let's debug this step-by-step with multiple perspectives:`;
             <div class="step">
                 <h3>Step 1: Initialize (One Time)</h3>
                 <p>Paste this in Copilot Chat to activate Think Center:</p>
-                <div class="code">${CopilotChatIntegration.THINK_CENTER_SYSTEM_PROMPT}</div>
+                <div class="code">${systemPrompt}</div>
             </div>
             
             <div class="step">
@@ -435,13 +562,14 @@ Let's debug this step-by-step with multiple perspectives:`;
         </html>`;
     }
 
-    private fallbackInitialization(): void {
+    private async fallbackInitialization(): Promise<void> {
+        const systemPrompt = await this.getSystemPrompt();
         vscode.window.showInformationMessage(
             'Think Center prompt copied to clipboard! Paste in any AI chat to activate.',
             'Show Prompt'
         ).then(selection => {
             if (selection === 'Show Prompt') {
-                this.showPromptInOutput(CopilotChatIntegration.THINK_CENTER_SYSTEM_PROMPT);
+                this.showPromptInOutput(systemPrompt);
             }
         });
     }
