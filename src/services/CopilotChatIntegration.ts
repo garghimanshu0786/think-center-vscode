@@ -56,13 +56,13 @@ Ready for multi-perspective development thinking!`;
         try {
             await this.configManager.createTemplateFiles();
             vscode.window.showInformationMessage(
-                '📝 Think Center configuration files created! Check .vscode/ folder.',
+                '📝 Think Center configuration files created!',
                 'Open Instructions',
                 'Open Prompts'
             ).then(selection => {
                 if (selection === 'Open Instructions') {
                     vscode.workspace.openTextDocument(vscode.Uri.file(
-                        vscode.workspace.workspaceFolders![0].uri.fsPath + '/.vscode/instructions.md'
+                        vscode.workspace.workspaceFolders![0].uri.fsPath + '/.github/copilot-instructions.md'
                     )).then(doc => vscode.window.showTextDocument(doc));
                 } else if (selection === 'Open Prompts') {
                     vscode.workspace.openTextDocument(vscode.Uri.file(
@@ -72,6 +72,50 @@ Ready for multi-perspective development thinking!`;
             });
         } catch (error) {
             vscode.window.showErrorMessage(`Failed to create config files: ${error}`);
+        }
+    }
+
+    async enhanceExistingInstructions(): Promise<void> {
+        if (!this.configManager) {
+            vscode.window.showErrorMessage('No workspace folder found. Please open a folder first.');
+            return;
+        }
+
+        try {
+            const result = await this.configManager.enhanceExistingInstructions();
+            
+            if (result.enhanced) {
+                vscode.window.showInformationMessage(
+                    `✨ ${result.message}`,
+                    'Open Enhanced File'
+                ).then(selection => {
+                    if (selection === 'Open Enhanced File' && result.filePath) {
+                        vscode.workspace.openTextDocument(vscode.Uri.file(result.filePath))
+                            .then(doc => vscode.window.showTextDocument(doc));
+                    }
+                });
+            } else if (result.filePath) {
+                vscode.window.showInformationMessage(
+                    `ℹ️ ${result.message}`,
+                    'Open Existing File'
+                ).then(selection => {
+                    if (selection === 'Open Existing File') {
+                        vscode.workspace.openTextDocument(vscode.Uri.file(result.filePath!))
+                            .then(doc => vscode.window.showTextDocument(doc));
+                    }
+                });
+            } else {
+                vscode.window.showInformationMessage(
+                    `💡 ${result.message}`,
+                    'Create New Files'
+                ).then(selection => {
+                    if (selection === 'Create New Files') {
+                        this.createConfigFiles();
+                    }
+                });
+            }
+        } catch (error) {
+            vscode.window.showErrorMessage(`Failed to enhance instructions: ${error}`);
         }
     }
 

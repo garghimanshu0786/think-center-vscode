@@ -100,20 +100,31 @@ Good code isn't just about syntax—it's about making thoughtful decisions. Thin
 
 Think Center can be customized for your specific project needs:
 
-### Create Configuration Files
+### Enhance Existing Instructions
+
+If you already have an instructions file (like `.github/copilot-instructions.md`, `instructions.md`, or `.vscode/instructions.md`), Think Center can enhance it:
+
+Run `Think Center: Enhance Existing Instructions with Think Center Sections` from the Command Palette to:
+
+- **Detect existing instruction files** in your workspace
+- **Add Think Center sections** to your current instructions
+- **Preserve your existing content** while adding perspective guidelines
+- **Smart detection** - won't duplicate if Think Center sections already exist
+
+### Create New Configuration Files
 
 Run `Think Center: Create Configuration Files` from the Command Palette to generate:
 
-- `.vscode/instructions.md` - Project-specific guidelines for each perspective
+- `.github/copilot-instructions.md` - Project-specific guidelines for each perspective
 - `.vscode/think-center-prompts.md` - Custom prompts tailored to your domain
 
 ### Automatic Detection
 
 Think Center automatically looks for and uses:
 
+- `.github/copilot-instructions.md` - GitHub Copilot instructions (recommended)
 - `.vscode/instructions.md` or `instructions.md` - Workspace-specific instructions
 - `.vscode/think-center-prompts.md` or `prompts.md` - Custom perspective prompts
-- `.github/copilot-instructions.md` - GitHub Copilot instructions
 - `README.md` - Project context and description
 
 ### Benefits of Customization

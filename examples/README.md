@@ -4,16 +4,17 @@ This directory contains example configuration files that demonstrate how to cust
 
 ## Files
 
-- `instructions-example.md` - Example workspace instructions
-- `prompts-example.md` - Example custom prompts
-- `project-specific-example.md` - Example for specific project types
+- `copilot-instructions-react-example.md` - Example workspace instructions for React projects
+- `think-center-prompts-react-example.md` - Example custom prompts for React development
 
 ## Usage
 
 1. Run the command "Think Center: Create Configuration Files" from the Command Palette
-2. This will create `.vscode/instructions.md` and `.vscode/think-center-prompts.md` template files
+2. This will create `.github/copilot-instructions.md` and `.vscode/think-center-prompts.md` template files
 3. Customize these files for your project's specific needs
 4. Think Center will automatically use these customizations in all interactions
+
+Alternatively, run "Think Center: Enhance Existing Instructions with Think Center Sections" to add Think Center sections to your existing instructions files.
 
 ## Benefits
 

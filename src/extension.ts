@@ -126,6 +126,12 @@ function registerCommands(
             copilotChatIntegration.createConfigFiles();
         })
     );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('thinkCenter.enhanceInstructions', () => {
+            copilotChatIntegration.enhanceExistingInstructions();
+        })
+    );
 }
 
 async function askPerspective(

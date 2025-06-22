@@ -18,9 +18,9 @@ export interface WorkspaceConfig {
 
 export class WorkspaceConfigManager {
     private static readonly CONFIG_FILES = [
-        '.vscode/instructions.md',
-        'instructions.md',
         '.github/copilot-instructions.md',
+        '.vscode/instructions.md', 
+        'instructions.md',
         'docs/instructions.md'
     ];
 
@@ -59,8 +59,14 @@ export class WorkspaceConfigManager {
     }
 
     async createTemplateFiles(): Promise<void> {
-        const instructionsPath = path.join(this.workspaceRoot, '.vscode', 'instructions.md');
+        const instructionsPath = path.join(this.workspaceRoot, '.github', 'copilot-instructions.md');
         const promptsPath = path.join(this.workspaceRoot, '.vscode', 'think-center-prompts.md');
+
+        // Create .github directory if it doesn't exist
+        const githubDir = path.join(this.workspaceRoot, '.github');
+        if (!fs.existsSync(githubDir)) {
+            fs.mkdirSync(githubDir, { recursive: true });
+        }
 
         // Create .vscode directory if it doesn't exist
         const vscodeDir = path.join(this.workspaceRoot, '.vscode');
@@ -82,6 +88,48 @@ export class WorkspaceConfigManager {
 
         // Invalidate cache
         this.cachedConfig = null;
+    }
+
+    async enhanceExistingInstructions(): Promise<{ enhanced: boolean; filePath?: string; message: string }> {
+        // Look for existing instructions files
+        for (const configFile of WorkspaceConfigManager.CONFIG_FILES) {
+            const filePath = path.join(this.workspaceRoot, configFile);
+            if (fs.existsSync(filePath)) {
+                try {
+                    const content = fs.readFileSync(filePath, 'utf8');
+                    
+                    // Check if it already has Think Center sections
+                    if (this.hasThinkCenterSections(content)) {
+                        return {
+                            enhanced: false,
+                            filePath,
+                            message: `${configFile} already contains Think Center sections`
+                        };
+                    }
+
+                    // Enhance the existing file
+                    const enhancedContent = this.addThinkCenterSections(content);
+                    fs.writeFileSync(filePath, enhancedContent);
+                    
+                    // Invalidate cache
+                    this.cachedConfig = null;
+                    
+                    return {
+                        enhanced: true,
+                        filePath,
+                        message: `Enhanced ${configFile} with Think Center sections`
+                    };
+                } catch (error) {
+                    console.error(`Failed to enhance ${configFile}:`, error);
+                }
+            }
+        }
+
+        // No existing instructions found, suggest creating new
+        return {
+            enhanced: false,
+            message: 'No existing instructions file found. Create new configuration files instead.'
+        };
     }
 
     private async loadInstructions(): Promise<string | undefined> {
@@ -305,5 +353,73 @@ For multi-perspective analysis, ensure all perspectives consider:
 
     clearCache(): void {
         this.cachedConfig = null;
+    }
+
+    private hasThinkCenterSections(content: string): boolean {
+        const thinkCenterIndicators = [
+            /# Think Center/i,
+            /## Think Center/i,
+            /### Weaver/i,
+            /### Maker/i,
+            /### Checker/i,
+            /### Observer\/Guardian/i,
+            /### Explorer\/Exploiter/i,
+            /## Perspective Guidelines/i
+        ];
+
+        return thinkCenterIndicators.some(indicator => indicator.test(content));
+    }
+
+    private addThinkCenterSections(existingContent: string): string {
+        const thinkCenterSection = `
+
+---
+
+# Think Center Integration
+
+This project now includes Think Center multi-perspective thinking framework.
+
+## Perspective Guidelines
+
+### Weaver (Architecture)
+- Focus on [specific architectural concerns for this project]
+- Consider [domain-specific patterns]
+- Pay attention to [scalability/maintainability concerns]
+
+### Maker (Implementation)
+- Prioritize [performance/readability/other concerns]
+- Use [preferred libraries/frameworks]
+- Follow [coding standards/conventions]
+
+### Checker (Quality)
+- Test for [specific edge cases in this domain]
+- Validate [business rules/constraints]
+- Check [security/performance requirements]
+
+### Observer/Guardian (Experience)
+- Consider [target users/developers]
+- Optimize for [workflow/maintainability]
+- Document [important patterns/decisions]
+
+### Explorer/Exploiter (Optimization)
+- Look for [performance bottlenecks]
+- Consider [alternative technologies]
+- Balance [competing trade-offs]
+
+## Think Center Usage
+
+Use these perspectives when working with AI:
+- "Weaver, how should I structure this feature?"
+- "Checker, what could go wrong here?"
+- "Council meeting: evaluate this architecture decision"
+
+## Custom Context
+
+<!-- Add any additional project-specific context for Think Center -->
+
+---
+`;
+
+        return existingContent + thinkCenterSection;
     }
 }
