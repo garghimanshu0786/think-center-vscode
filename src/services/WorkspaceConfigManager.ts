@@ -18,10 +18,7 @@ export interface WorkspaceConfig {
 
 export class WorkspaceConfigManager {
     private static readonly CONFIG_FILES = [
-        '.github/copilot-instructions.md',
-        '.vscode/instructions.md', 
-        'instructions.md',
-        'docs/instructions.md'
+        '.github/instructions/.instructions.md'
     ];
 
     private static readonly PROMPT_FILES = [
@@ -59,13 +56,13 @@ export class WorkspaceConfigManager {
     }
 
     async createTemplateFiles(): Promise<void> {
-        const instructionsPath = path.join(this.workspaceRoot, '.github', 'copilot-instructions.md');
+        const instructionsPath = path.join(this.workspaceRoot, '.github', 'instructions', '.instructions.md');
         const promptsPath = path.join(this.workspaceRoot, '.vscode', 'think-center-prompts.md');
 
-        // Create .github directory if it doesn't exist
-        const githubDir = path.join(this.workspaceRoot, '.github');
-        if (!fs.existsSync(githubDir)) {
-            fs.mkdirSync(githubDir, { recursive: true });
+        // Create .github/instructions directory if it doesn't exist
+        const instructionsDir = path.join(this.workspaceRoot, '.github', 'instructions');
+        if (!fs.existsSync(instructionsDir)) {
+            fs.mkdirSync(instructionsDir, { recursive: true });
         }
 
         // Create .vscode directory if it doesn't exist

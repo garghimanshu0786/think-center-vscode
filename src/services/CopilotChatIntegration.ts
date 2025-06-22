@@ -62,7 +62,7 @@ Ready for multi-perspective development thinking!`;
             ).then(selection => {
                 if (selection === 'Open Instructions') {
                     vscode.workspace.openTextDocument(vscode.Uri.file(
-                        vscode.workspace.workspaceFolders![0].uri.fsPath + '/.github/copilot-instructions.md'
+                        vscode.workspace.workspaceFolders![0].uri.fsPath + '/.github/instructions/.instructions.md'
                     )).then(doc => vscode.window.showTextDocument(doc));
                 } else if (selection === 'Open Prompts') {
                     vscode.workspace.openTextDocument(vscode.Uri.file(
