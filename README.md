@@ -2,8 +2,8 @@
 
 *Bringing multi-perspective thinking to your coding workflow*
 
-[![Version](https://img.shields.io/vscode-marketplace/v/garghimanshu0786.think-center)](https://marketplace.visualstudio.com/items?itemName=garghimanshu0786.think-center)
-[![Downloads](https://img.shields.io/vscode-marketplace/d/garghimanshu0786.think-center)](https://marketplace.visualstudio.com/items?itemName=garghimanshu0786.think-center)
+[![Version](https://img.shields.io/vscode-marketplace/v/himanshu-garg.think-center)](https://marketplace.visualstudio.com/items?itemName=himanshu-garg.think-center)
+[![Downloads](https://img.shields.io/vscode-marketplace/d/himanshu-garg.think-center)](https://marketplace.visualstudio.com/items?itemName=himanshu-garg.think-center)
 
 > This extension brings the Think Center framework into VS Code, making it easy to approach coding challenges from multiple perspectives. Built on the foundation of [achamian/think-center](https://github.com/achamian/think-center).
 
@@ -66,7 +66,7 @@ Copilot: *multi-perspective analysis covering all angles*
 
 **From Command Line:**
 ```bash
-code --install-extension garghimanshu0786.think-center
+code --install-extension himanshu-garg.think-center
 ```
 
 ## Commands & Shortcuts
@@ -119,26 +119,3 @@ Special thanks to the Think Center community for developing this powerful thinki
 ---
 
 *Happy coding with multiple perspectives! 🧠*
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
