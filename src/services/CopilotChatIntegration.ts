@@ -53,16 +53,26 @@ Ready for multi-perspective development thinking!`;
             const action = await vscode.window.showInformationMessage(
                 '🧠 Think Center initialization copied to clipboard!',
                 { modal: false },
-                'Paste in Chat',
+                'Open Chat & Paste',
                 'Show Instructions',
                 'Copy Again'
             );
 
-            if (action === 'Paste in Chat') {
+            if (action === 'Open Chat & Paste') {
                 try {
                     await vscode.commands.executeCommand('workbench.panel.chat.view.copilot.focus');
+                    // Give a helpful reminder since auto-paste doesn't work
+                    setTimeout(() => {
+                        vscode.window.showInformationMessage(
+                            '📋 Prompt is in clipboard - now paste it in the chat (Cmd+V)',
+                            { modal: false }
+                        );
+                    }, 500);
                 } catch (error) {
-                    vscode.window.showInformationMessage('Please open GitHub Copilot Chat manually and paste the initialization prompt');
+                    vscode.window.showInformationMessage(
+                        '💡 Please open GitHub Copilot Chat manually and paste (Cmd+V) the initialization prompt',
+                        { modal: false }
+                    );
                 }
             } else if (action === 'Show Instructions') {
                 this.showInstructions();
@@ -92,15 +102,22 @@ Ready for multi-perspective development thinking!`;
             await vscode.env.clipboard.writeText(prompt);
             
             vscode.window.showInformationMessage(
-                `${this.getPerspectiveEmoji(perspective)} ${this.getPerspectiveName(perspective)} prompt ready! Paste in Copilot Chat.`,
+                `${this.getPerspectiveEmoji(perspective)} ${this.getPerspectiveName(perspective)} prompt ready! Now paste in Chat (Cmd+V)`,
                 'Open Chat',
                 'Show Prompt'
             ).then(selection => {
                 if (selection === 'Open Chat') {
                     try {
                         vscode.commands.executeCommand('workbench.panel.chat.view.copilot.focus');
+                        // Remind user to paste
+                        setTimeout(() => {
+                            vscode.window.showInformationMessage(
+                                '📋 Paste the prompt in chat with Cmd+V',
+                                { modal: false }
+                            );
+                        }, 500);
                     } catch (error) {
-                        vscode.window.showInformationMessage('Please open GitHub Copilot Chat manually');
+                        vscode.window.showInformationMessage('Please open GitHub Copilot Chat manually and paste (Cmd+V)');
                     }
                 } else if (selection === 'Show Prompt') {
                     this.showPromptInOutput(prompt);
@@ -125,15 +142,22 @@ Ready for multi-perspective development thinking!`;
         await vscode.env.clipboard.writeText(prompt);
         
         vscode.window.showInformationMessage(
-            '🏛️ Council Meeting prompt ready! Paste in Copilot Chat.',
+            '🏛️ Council Meeting prompt ready! Now paste in Chat (Cmd+V)',
             'Open Chat',
             'Show Prompt'
         ).then(selection => {
             if (selection === 'Open Chat') {
                 try {
                     vscode.commands.executeCommand('workbench.panel.chat.view.copilot.focus');
+                    // Remind user to paste
+                    setTimeout(() => {
+                        vscode.window.showInformationMessage(
+                            '📋 Paste the Council Meeting prompt in chat with Cmd+V',
+                            { modal: false }
+                        );
+                    }, 500);
                 } catch (error) {
-                    vscode.window.showInformationMessage('Please open GitHub Copilot Chat manually');
+                    vscode.window.showInformationMessage('Please open GitHub Copilot Chat manually and paste (Cmd+V)');
                 }
             } else if (selection === 'Show Prompt') {
                 this.showPromptInOutput(prompt);
@@ -169,15 +193,22 @@ Ready for multi-perspective development thinking!`;
         await vscode.env.clipboard.writeText(prompt);
         
         vscode.window.showInformationMessage(
-            `🧠 Think Center ${label} prompt ready! Paste in Copilot Chat.`,
+            `🧠 Think Center ${label} prompt ready! Now paste in Chat (Cmd+V)`,
             'Open Chat',
             'Show Prompt'
         ).then(selection => {
             if (selection === 'Open Chat') {
                 try {
                     vscode.commands.executeCommand('workbench.panel.chat.view.copilot.focus');
+                    // Remind user to paste
+                    setTimeout(() => {
+                        vscode.window.showInformationMessage(
+                            '📋 Paste the prompt in chat with Cmd+V',
+                            { modal: false }
+                        );
+                    }, 500);
                 } catch (error) {
-                    vscode.window.showInformationMessage('Please open GitHub Copilot Chat manually');
+                    vscode.window.showInformationMessage('Please open GitHub Copilot Chat manually and paste (Cmd+V)');
                 }
             } else if (selection === 'Show Prompt') {
                 this.showPromptInOutput(prompt);
